@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Marwadi Store</title>
+
+<style>
+:root{
+    --bg-white: #ffffff;
+    --bg-gray: #f4f6f8;
+    --text-main: #1a1a1a;
+    --text-muted: #6c757d;
+    --green: #10b981;
+    --green-dark: #059669;
+    --gold: #f59e0b;
+    --red: #ef4444;
+    --border-color: #e5e7eb;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg-gray);
+    color: var(--text-main);
+    padding-bottom: 90px;
+}
+
+button, input, select, textarea{
+    font: inherit;
+}
+
+button{
+    cursor: pointer;
+}
+
+.hidden{
+    display: none !important;
+}
+
+/* TOP HEADER */
+.topbar{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.logo{
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: .5px;
+}
+
+.logo span{
+    color: var(--green);
+}
+
+/* 3D STYLISH SEARCH BAR */
+.search-row{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.search-box{
+    flex: 1;
+    border: 2px solid var(--border-color);
+    background: #fafafa;
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 11px 16px;
+    outline: none;
+    font-size: 14px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+}
+.search-box:focus{ 
+    border-color: var(--green); 
+    background: #fff; 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15), inset 0 1px 2px rgba(0,0,0,0.02); 
+}
+
+.icon-btn{
+    border: none;
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: #fff;
+    font-weight: 700;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    transition: transform 0.1s ease;
+}
+.icon-btn:active{ transform: scale(0.96); }
+
+/* PAGE */
+.page{
+    display: none;
+    padding: 14px;
+}
+
+.page.active{
+    display: block;
+}
+
+.section-title{
+    margin: 16px 0 10px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+/* CATEGORIES */
+.category-row{
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 4px 0 12px 0;
+    scrollbar-width: none;
+}
+.category-row::-webkit-scrollbar{ display: none; }
+
+.category-chip{
+    white-space: nowrap;
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+/* BANNER */
+.banner{
+    border-radius: 14px;
+    padding: 22px;
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: #fff;
+    margin: 6px 0 12px 0;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--green);
+}
+
+.banner h2{
+    font-size: 24px;
+    font-weight: 800;
+}
+.banner p{
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 4px;
+}
+
+/* PRODUCTS GRID */
+.product-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.product-card{
+    background: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    position: relative;
+}
+
+.product-card img{
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    background: #f9fafb;
+}
+
+.product-info{
+    padding: 10px;
+}
+
+.product-name{
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-main);
+    min-height: 38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.price{
+    font-weight: 800;
+    font-size: 17px;
+    margin-top: 6px;
+    color: var(--green);
+}
+
+.old-price{
+    text-decoration: line-through;
+    color: var(--text-muted);
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.discount{
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.wishlist-btn{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    color: var(--text-main);
+    font-size: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-btn{
+    width: 100%;
+    margin-top: 8px;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    background: var(--green);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background: var(--bg-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    z-index: 200;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+}
+
+.nav-item{
+    border: none;
+    background: none;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    flex: 1;
+}
+
+.nav-item svg{
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+.nav-item.active-nav {
+    color: var(--green);
+}
+
+/* FILTERS & DETAILS */
+.filter-box{
+    background: var(--bg-white);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 12px;
+}
+
+.filter-row{
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-top: 8px;
+}
+
+.filter-row button{
+    white-space: nowrap;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-white);
+    color: var(--text-main);
+    border-radius: 16px;
+    font-size: 13px;
+}
+
+.gallery{
+    background: var(--bg-white);
+}
+
+.main-image{
+    width: 100%;
+    height: 340px;
+    object-fit: contain;
+}
+
+.thumbnail-row{
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.thumbnail-row img{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.thumbnail-row img.active-thumb{
+    border-color: var(--green);
+}
+
+.detail-card{
+    background: var(--bg-white);
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.detail-name{
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.choice-row{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.choice{
+    padding: 8px 14px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-white);
+    color: var(--text-main);
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.choice.selected{
+    background: var(--green);
+    color: #fff;
+    font-weight: 600;
+    border-color: var(--green);
+}
+
+.quantity-row{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity-row button{
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--bg-white);
+    color: var(--text-main);
+    font-size: 18px;
+}
+
+/* BUY BAR */
+.buy-bar{
+    position: fixed;
+    bottom: 65px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: var(--bg-white);
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--border-color);
+    z-index: 150;
+}
+
+.buy-bar button{
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.add-cart{
+    background: #f3f4f6;
+    color: var(--text-main);
+}
+
+.buy-now{
+    background: var(--gold);
+    color: #000;
+}
+
+/* FORMS & BUTTONS */
+.form-card{
+    background: var(--bg-white);
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.form-card input, .form-card select, .form-card textarea{
+    width: 100%;
+    padding: 11px;
+    margin: 6px 0;
+    border: 1px solid var(--border-color);
+    background: var(--bg-white);
+    color: var(--text-main);
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+.form-card input:focus{ border-color: var(--green); }
+
+.primary-btn{
+    width: 100%;
+    border: none;
+    background: var(--green);
+    color: #fff;
+    padding: 13px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.danger-btn{
+    border: none;
+    background: var(--red);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.success-btn{
+    border: none;
+    background: var(--green);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.order-card{
+    background: var(--bg-white);
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.status{
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    background: #e8f5e9;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-menu{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+}
+
+.admin-menu button{
+    padding: 18px 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-white);
+    color: var(--text-main);
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.admin-order{
+    background: var(--bg-white);
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+/* MODAL */
+.modal{
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.modal.show{
+    display: flex;
+}
+
+.modal-content{
+    background: var(--bg-white);
+    width: 100%;
+    max-height: 92vh;
+    overflow: auto;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+}
+
+.notification{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    background: var(--green);
+    color: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    z-index: 1000;
+    display: none;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="notification" id="notification"></div>
+
+<!-- HEADER -->
+<header class="topbar" id="mainHeader">
+    <div class="logo">
+        <span>M</span>ARWADI
+    </div>
+    <div class="search-row">
+        <input class="search-box" id="globalSearch" placeholder="Search products..." onkeydown="searchKey(event)">
+        <button class="icon-btn" onclick="performSearch()">Search</button>
+    </div>
+</header>
+
+<!-- HOME -->
+<div class="page active" id="homePage">
+    <div class="banner">
+        <h2>Royal Collection</h2>
+        <p>Fashion • Shoes • Grocery • Electronics</p>
+    </div>
+    <div class="section-title">Categories</div>
+    <div class="category-row">
+        <button class="category-chip" onclick="categorySearch('Fashion')">Fashion</button>
+        <button class="category-chip" onclick="categorySearch('Shoes')">Shoes</button>
+        <button class="category-chip" onclick="categorySearch('Grocery')">Grocery</button>
+        <button class="category-chip" onclick="categorySearch('Clothing')">Clothing</button>
+        <button class="category-chip" onclick="categorySearch('Electronics')">Electronics</button>
+    </div>
+    <div class="section-title">Trending Products</div>
+    <div class="product-grid" id="homeProducts"></div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page" id="searchPage">
+    <h2 class="section-title" id="searchTitle">Search Results</h2>
+    <div class="filter-box">
+        <b>Filters</b>
+        <div class="filter-row">
+            <button onclick="setPriceFilter(199)">Under ₹199</button>
+            <button onclick="setPriceFilter(499)">Under ₹499</button>
+            <button onclick="setPriceFilter(1000)">Under ₹1000</button>
+            <button onclick="setGenderFilter('Male')">Male</button>
+            <button onclick="setGenderFilter('Female')">Female</button>
+        </div>
+        <select id="sortSelect" onchange="applySearchFilters()" style="width:100%;padding:10px;margin-top:10px;border:1px solid var(--border-color);border-radius:8px;">
+            <option value="default">Sort Products</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
+    </div>
+    <div class="product-grid" id="searchProducts"></div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div class="page" id="productPage">
+    <button class="icon-btn" onclick="goHome()" style="margin-bottom:10px;">Back</button>
+    <div class="gallery">
+        <img id="mainProductImage" class="main-image" src="">
+        <div id="thumbnailRow" class="thumbnail-row"></div>
+    </div>
+    <div class="detail-card">
+        <div id="detailProductName" class="detail-name"></div>
+        <div id="detailPrice" class="price"></div>
+        <div id="detailDiscount" class="discount"></div>
+        <p id="detailDescription" style="margin-top:10px;color:var(--text-muted);"></p>
+    </div>
+    <div class="detail-card">
+        <b>Select Color</b>
+        <div id="colorChoices" class="choice-row"></div>
+    </div>
+    <div class="detail-card">
+        <b>Select Size</b>
+        <div id="sizeChoices" class="choice-row"></div>
+    </div>
+    <div class="detail-card">
+        <b>Quantity</b>
+        <div class="quantity-row" style="margin-top:10px">
+            <button onclick="changeQuantity(-1)">-</button>
+            <b id="quantityText" style="font-size:16px;">1</b>
+            <button onclick="changeQuantity(1)">+</button>
+        </div>
+    </div>
+    <div class="section-title">Similar Products</div>
+    <div class="product-grid" id="relatedProducts"></div>
+</div>
+
+<!-- WISHLIST -->
+<div class="page" id="wishlistPage">
+    <h2 class="section-title">My Wishlist</h2>
+    <div class="product-grid" id="wishlistProducts"></div>
+</div>
+
+<!-- CART -->
+<div class="page" id="cartPage">
+    <h2 class="section-title">Shopping Cart</h2>
+    <div id="cartItems"></div>
+</div>
+
+<!-- ORDERS -->
+<div class="page" id="ordersPage">
+    <h2 class="section-title">My Orders</h2>
+    <div id="customerOrders"></div>
+</div>
+
+<!-- SETTINGS -->
+<div class="page" id="settingsPage">
+    <h2 class="section-title">Settings & Support</h2>
+    <div class="form-card" style="display:flex;flex-direction:column;gap:10px;">
+        <button class="primary-btn" onclick="openAdminLogin()">Admin Dashboard</button>
+        
+        <div style="padding:12px;background:var(--bg-gray);border-radius:8px;border:1px solid var(--border-color);">
+            <label style="font-weight:700;display:block;margin-bottom:6px;">Select Language / भाषा चुनें</label>
+            <select id="appLanguageSelect" onchange="changeAppLanguage(this.value)" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border-color);">
+                <option value="en">English (Default)</option>
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="mr">मराठी (Marwadi / Local)</option>
+            </select>
+        </div>
+
+        <button class="primary-btn" onclick="openHelpCenter()" style="background:#111827;color:#fff;">Help Center & Support</button>
+        <button class="primary-btn" onclick="openLiveChat()" style="background:#059669;color:#fff;">Live Chat Support</button>
+        <button class="primary-btn" onclick="showNotifications()" style="background:#e9ecef;color:var(--text-main);">Notifications</button>
+    </div>
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+    <button class="nav-item active-nav" id="navHome" onclick="goHome()">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Home
+    </button>
+    <button class="nav-item" id="navWishlist" onclick="switchTab('wishlistPage', 'navWishlist');renderWishlist()">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Wishlist
+    </button>
+    <button class="nav-item" id="navCart" onclick="switchTab('cartPage', 'navCart');renderCart()">
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        Cart
+    </button>
+    <button class="nav-item" id="navOrders" onclick="switchTab('ordersPage', 'navOrders');renderCustomerOrders()">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        Orders
+    </button>
+    <button class="nav-item" id="navSettings" onclick="switchTab('settingsPage', 'navSettings')">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        Settings
+    </button>
+</nav>
+
+<!-- BUY MODAL -->
+<div class="modal" id="buyModal">
+    <div class="modal-content">
+        <h2>Delivery Address</h2>
+        <div class="form-card" style="border:none;padding:0;">
+            <input id="customerName" placeholder="Full Name">
+            <input id="customerPhone" placeholder="Mobile Number" type="tel">
+            <input id="customerEmail" placeholder="Email Address">
+            <input id="customerHouse" placeholder="House / Flat No">
+            <input id="customerColony" placeholder="Colony / Area / Village">
+            <select id="customerState">
+                <option>Rajasthan</option><option>Gujarat</option><option>Delhi</option><option>Maharashtra</option><option>Other</option>
+            </select>
+            <input id="customerDistrict" placeholder="District">
+            <input id="customerPincode" placeholder="PIN Code">
+            <button class="primary-btn" onclick="placeOrder()" style="background:var(--gold);color:#000;">Place Order – Cash on Delivery</button>
+            <button class="primary-btn" onclick="closeBuyModal()" style="background:#6c757d;color:#fff;margin-top:8px;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="modal" id="adminModal">
+    <div class="modal-content">
+        <h2>Admin Access</h2>
+        <div class="form-card" style="border:none;padding:0;">
+            <input type="password" id="adminPassword" placeholder="Enter Secure PIN">
+            <p id="adminError" style="color:var(--red);margin-top:8px;font-weight:600;"></p>
+            <button class="primary-btn" onclick="checkAdminPassword()">Unlock Dashboard</button>
+            <button class="primary-btn" onclick="closeAdminModal()" style="background:#6c757d;color:#fff;margin-top:8px;">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="modal" id="adminDashboardModal">
+    <div class="modal-content">
+        <h2>Owner Dashboard</h2>
+        <div style="background:var(--bg-gray);padding:12px;border-radius:8px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border-color);">
+            <b>Shop Status:</b>
+            <button id="shopStatusToggleBtn" class="success-btn" onclick="toggleShopStatus()">Orders are OPEN</button>
+        </div>
+        <div class="admin-menu">
+            <button onclick="openAdminSection('addProduct')">Add Product</button>
+            <button onclick="openAdminSection('adminProducts')">Manage Products</button>
+            <button onclick="openAdminSection('adminOrders')">Customer Orders</button>
+            <button onclick="openAdminSection('analytics')">Analytics</button>
+        </div>
+        
+        <div id="adminAddProduct" class="hidden" style="margin-top:15px">
+            <h3>Add New Product</h3>
+            <div class="form-card">
+                <input id="adminProductName" placeholder="Product Name">
+                <select id="adminCategory">
+                    <option>Fashion</option><option>Shoes</option><option>Clothing</option><option>Grocery</option><option>Electronics</option><option>Home</option>
+                </select>
+                <select id="adminGender">
+                    <option>All</option><option>Male</option><option>Female</option>
+                </select>
+                <input id="adminPrice" type="number" placeholder="Base Price (₹)">
+                <input id="adminOldPrice" type="number" placeholder="Old Price (optional)">
+                <input id="adminDiscount" type="number" placeholder="Discount Percentage">
+                <input id="adminStock" type="number" placeholder="Available Stock">
+                <input id="adminSizes" placeholder="Sizes: 6,7,8 or S,M,L">
+                <input id="adminColors" placeholder="Colors: Black,Blue">
+                <textarea id="adminDescription" placeholder="Product Description"></textarea>
+                <label style="display:block;margin-top:10px;font-weight:600;">
+                    Select Photos from Gallery
+                    <input id="adminImages" type="file" accept="image/*" multiple style="margin-top:5px;">
+                </label>
+                <button class="primary-btn" onclick="addProduct()">Publish Instantly</button>
+            </div>
+        </div>
+
+        <div id="adminListedProducts" class="hidden" style="margin-top:15px">
+            <h3>Listed Products</h3>
+            <div id="adminProductList"></div>
+        </div>
+
+        <div id="adminOrdersSection" class="hidden" style="margin-top:15px">
+            <h3>Customer Orders</h3>
+            <div id="adminOrdersList"></div>
+        </div>
+
+        <div id="analyticsSection" class="hidden" style="margin-top:15px">
+            <h3>Sales Analytics</h3>
+            <div class="form-card">
+                <p>Total Products: <b id="analyticsProducts" style="color:var(--green);">0</b></p><br>
+                <p>Total Orders: <b id="analyticsOrders" style="color:var(--green);">0</b></p><br>
+                <p>Accepted Orders: <b id="analyticsAccepted" style="color:var(--green);">0</b></p>
+            </div>
+        </div>
+
+        <button class="danger-btn" style="margin-top:15px;width:100%" onclick="closeAdminDashboard()">Close Dashboard</button>
+    </div>
+</div>
+
+<script>
+/* --- GITHUB API CONFIGURATION --- */
+const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME'; 
+const REPO_NAME = 'YOUR_REPO_NAME';             
+const GITHUB_TOKEN = 'YOUR_PERSONAL_ACCESS_TOKEN'; 
+
+let products = [];
+let orders = [];
+let wishlist = JSON.parse(localStorage.getItem("marwadiWishlist")) || [];
+let cart = JSON.parse(localStorage.getItem("marwadiCart")) || [];
+let notifications = JSON.parse(localStorage.getItem("marwadiNotifications")) || [];
+let shopClosed = false;
+
+// Auto detect device language on first load
+window.addEventListener('DOMContentLoaded', () => {
+    const userLang = navigator.language || navigator.userLanguage;
+    const selectEl = document.getElementById("appLanguageSelect");
+    if(userLang.startsWith('hi')) {
+        selectEl.value = 'hi';
+    } else if(userLang.startsWith('mr')) {
+        selectEl.value = 'mr';
+    } else {
+        selectEl.value = 'en';
+    }
+    loadDataFromGitHub();
+});
+
+// NEW FUNCTION: Auto-remove delivered orders older than 24 hours
+async function cleanupDeliveredOrders() {
+    const now = Date.now();
+    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000; 
+    let initialLength = orders.length;
+    
+    orders = orders.filter(o => {
+        if (o.status === "Delivered" && o.deliveredAt) {
+            return (now - o.deliveredAt) < TWENTY_FOUR_HOURS;
+        }
+        return true;
+    });
+    
+    if (orders.length !== initialLength) {
+        await saveToGitHub('orders.json', orders);
+    }
+}
+
+async function loadDataFromGitHub() {
+    try {
+        const prodRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/products.json`, {
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if(prodRes.ok) {
+            const data = await prodRes.json();
+            products = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+        }
+        
+        const ordRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/orders.json`, {
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if(ordRes.ok) {
+            const data = await ordRes.json();
+            orders = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+        }
+
+        const setRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/settings.json`, {
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if(setRes.ok) {
+            const data = await setRes.json();
+            const settings = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+            shopClosed = settings.shopClosed || false;
+            updateShopStatusUI();
+        }
+    } catch(e) {
+        products = JSON.parse(localStorage.getItem("marwadiProducts")) || getSampleProducts();
+        orders = JSON.parse(localStorage.getItem("marwadiOrders")) || [];
+    }
+    
+    // Clean up delivered orders after loading data
+    await cleanupDeliveredOrders();
+    renderHomeProducts();
+}
+
+async function saveToGitHub(fileName, dataArray) {
+    const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${fileName}`;
+    try {
+        const getRes = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+        const fileData = await getRes.json();
+        const sha = fileData.sha;
+
+        const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(dataArray, null, 2))));
+        await fetch(url, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: "Update via App", content: encodedContent, sha: sha })
+        });
+    } catch(e) {
+        console.error("Cloud sync failed, stored locally");
+    }
+    if(fileName === 'products.json') localStorage.setItem("marwadiProducts", JSON.stringify(dataArray));
+    if(fileName === 'orders.json') localStorage.setItem("marwadiOrders", JSON.stringify(dataArray));
+}
+
+function getSampleProducts() {
+    return [
+        { id:1, name:"Comfortable Daily Slipper", category:"Shoes", gender:"Male", price:299, oldPrice:499, discount:40, stock:10, sizes:["6","7","8","9"], colors:["Black"], description:"Comfortable daily wear.", images:["https://images.unsplash.com/photo-1603487742131-4160ec999306?auto=format&fit=crop&w=600"] }
+    ];
+}
+
+let selectedProduct = null, selectedSize = null, selectedColor = null, selectedQuantity = 1;
+let currentSearchQuery = "", currentPriceFilter = null, currentGenderFilter = "All";
+
+function notify(message){
+    notifications.unshift({message: message, date: new Date().toLocaleString()});
+    localStorage.setItem("marwadiNotifications", JSON.stringify(notifications));
+    const box = document.getElementById("notification");
+    box.textContent = message;
+    box.style.display = "block";
+    setTimeout(() => { box.style.display = "none"; }, 4000);
+}
+
+function showNotifications(){
+    if(notifications.length === 0){ alert("No notifications."); return; }
+    alert(notifications.map(n => n.date + "\n" + n.message).join("\n\n"));
+}
+
+function updateActiveNav(activeId){
+    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active-nav"));
+    const activeEl = document.getElementById(activeId);
+    if(activeEl) activeEl.classList.add("active-nav");
+}
+
+function switchTab(pageId, navId) {
+    showPage(pageId);
+    updateActiveNav(navId);
+}
+
+function showPage(id){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    window.scrollTo(0,0);
+
+    // Header visibility: Show only on homePage
+    const header = document.getElementById("mainHeader");
+    if(id === "homePage") {
+        header.classList.remove("hidden");
+    } else {
+        header.classList.add("hidden");
+    }
+}
+
+function goHome(){ 
+    showPage("homePage"); 
+    updateActiveNav("navHome");
+    renderHomeProducts(); 
+}
+
+function productCard(product){
+    let image = product.images?.[0] || "";
+    let isWishlisted = wishlist.includes(product.id);
+    return `
+    <div class="product-card">
+        <button class="wishlist-btn" onclick="toggleWishlist(${product.id})">${isWishlisted ? "❤️" : "♡"}</button>
+        <img src="${image}" onclick="openProduct(${product.id})">
+        <div class="product-info">
+            <div class="product-name" onclick="openProduct(${product.id})">${product.name}</div>
+            <div class="price">₹${product.price} ${product.oldPrice ? `<span class="old-price">₹${product.oldPrice}</span>` : ""}</div>
+            <div class="discount">${product.discount || 0}% OFF</div>
+            <button class="card-btn" onclick="openProduct(${product.id})">View Product</button>
+        </div>
+    </div>`;
+}
+
+function renderHomeProducts(){
+    const container = document.getElementById("homeProducts");
+    container.innerHTML = products.filter(p => p.stock > 0).map(productCard).join("");
+}
+
+function searchKey(event){ if(event.key === "Enter") performSearch(); }
+function performSearch(){
+    currentSearchQuery = document.getElementById("globalSearch").value.trim();
+    showPage("searchPage");
+    applySearchFilters();
+}
+function categorySearch(cat){ document.getElementById("globalSearch").value = cat; performSearch(); }
+function setPriceFilter(p){ currentPriceFilter = p; applySearchFilters(); }
+function setGenderFilter(g){ currentGenderFilter = g; applySearchFilters(); }
+
+function applySearchFilters(){
+    let q = currentSearchQuery.toLowerCase();
+    let res = products.filter(p => {
+        let match = q === "" || (p.name + " " + p.category).toLowerCase().includes(q);
+        if(currentPriceFilter && p.price > currentPriceFilter) return false;
+        if(currentGenderFilter !== "All" && p.gender !== "All" && p.gender !== currentGenderFilter) return false;
+        return match;
+    });
+    document.getElementById("searchProducts").innerHTML = res.map(productCard).join("");
+}
+
+function toggleWishlist(id){
+    if(wishlist.includes(id)) wishlist = wishlist.filter(i => i !== id);
+    else wishlist.push(id);
+    localStorage.setItem("marwadiWishlist", JSON.stringify(wishlist));
+    renderHomeProducts(); renderWishlist();
+}
+
+function renderWishlist(){
+    let list = products.filter(p => wishlist.includes(p.id));
+    document.getElementById("wishlistProducts").innerHTML = list.length ? list.map(productCard).join("") : "<p style='color:var(--text-muted);'>Your wishlist is empty.</p>";
+}
+
+function openProduct(id){
+    selectedProduct = products.find(p => p.id === id);
+    selectedSize = null; selectedColor = null; selectedQuantity = 1;
+    showPage("productPage");
+    document.getElementById("detailProductName").textContent = selectedProduct.name;
+    document.getElementById("detailPrice").textContent = "₹" + selectedProduct.price;
+    document.getElementById("detailDiscount").textContent = (selectedProduct.discount || 0) + "% OFF";
+    document.getElementById("detailDescription").textContent = selectedProduct.description;
+    
+    document.getElementById("mainProductImage").src = selectedProduct.images?.[0] || "";
+    document.getElementById("thumbnailRow").innerHTML = (selectedProduct.images || []).map((img, idx) => `<img src="${img}" class="${idx===0?'active-thumb':''}" onclick="document.getElementById('mainProductImage').src='${img}'">`).join("");
+    
+    document.getElementById("colorChoices").innerHTML = selectedProduct.colors?.length ? selectedProduct.colors.map(c => `<button class="choice" onclick="selectedColor='${c}';this.parentElement.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">${c}</button>`).join("") : "<p style='color:var(--text-muted);'>Default</p>";
+    document.getElementById("sizeChoices").innerHTML = selectedProduct.sizes?.length ? selectedProduct.sizes.map(s => `<button class="choice" onclick="selectedSize='${s}';this.parentElement.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">${s}</button>`).join("") : "<p style='color:var(--text-muted);'>Free Size</p>";
+    document.getElementById("quantityText").textContent = 1;
+    document.getElementById("relatedProducts").innerHTML = products.filter(p => p.id !== id).slice(0,4).map(productCard).join("");
+}
+
+function changeQuantity(c){
+    selectedQuantity += c;
+    if(selectedQuantity < 1) selectedQuantity = 1;
+    if(selectedQuantity > selectedProduct.stock) selectedQuantity = selectedProduct.stock;
+    document.getElementById("quantityText").textContent = selectedQuantity;
+}
+
+function addToCart(){
+    if(selectedProduct.sizes?.length > 0 && !selectedSize){ alert("Please select a size."); return; }
+    cart.push({id:Date.now(), productId:selectedProduct.id, size:selectedSize || 'Free Size', color:selectedColor || 'Default', quantity:selectedQuantity});
+    localStorage.setItem("marwadiCart", JSON.stringify(cart));
+    notify("Added to cart.");
+}
+
+function renderCart(){
+    const container = document.getElementById("cartItems");
+    if(!cart.length){ container.innerHTML = "<p style='color:var(--text-muted);'>Cart is empty.</p>"; return; }
+    container.innerHTML = cart.map((item, idx) => {
+        let p = products.find(prod => prod.id === item.productId);
+        if(!p) return "";
+        return `<div class="order-card"><b>${p.name}</b><p class="price">₹${p.price}</p><p style='color:var(--text-muted);'>Size: ${item.size} | Qty: ${item.quantity}</p><button class="primary-btn" onclick="buyCartItem(${idx})" style="padding:10px;margin-top:8px;">Buy Now – COD</button></div>`;
+    }).join("");
+}
+
+function buyCartItem(idx){
+    let item = cart[idx];
+    selectedProduct = products.find(p => p.id === item.productId);
+    selectedSize = item.size; selectedColor = item.color; selectedQuantity = item.quantity;
+    openBuyModal();
+}
+
+function openBuyModal(){
+    if(shopClosed){ alert("Sorry! Shop is currently closed for orders."); return; }
+    if(!selectedProduct || selectedProduct.stock <= 0){ alert("Out of stock."); return; }
+    document.getElementById("buyModal").classList.add("show");
+}
+function closeBuyModal(){ document.getElementById("buyModal").classList.remove("show"); }
+
+async function placeOrder(){
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const house = document.getElementById("customerHouse").value.trim();
+    const colony = document.getElementById("customerColony").value.trim();
+    const district = document.getElementById("customerDistrict").value.trim();
+    const pincode = document.getElementById("customerPincode").value.trim();
+
+    if(!name || !phone || !house || !colony || !district || !pincode){ alert("Please fill all address details."); return; }
+
+    const order = {
+        id: "ORD" + Date.now(),
+        productId: selectedProduct.id,
+        productName: selectedProduct.name,
+        price: selectedProduct.price,
+        size: selectedSize || "Free Size",
+        color: selectedColor || "Default",
+        quantity: selectedQuantity,
+        payment: "Cash on Delivery",
+        status: "Pending",
+        date: new Date().toLocaleString(),
+        customer: { name, phone, house, colony, district, pincode, state: document.getElementById("customerState").value }
+    };
+
+    orders.unshift(order);
+    selectedProduct.stock -= selectedQuantity;
+
+    await saveToGitHub('products.json', products);
+    await saveToGitHub('orders.json', orders);
+
+    notify("Order placed successfully!");
+    closeBuyModal();
+    switchTab('ordersPage', 'navOrders');
+    renderCustomerOrders();
+}
+
+function renderCustomerOrders(){
+    const container = document.getElementById("customerOrders");
+    if(!orders.length){ container.innerHTML = "<p style='color:var(--text-muted);'>No orders yet.</p>"; return; }
+    container.innerHTML = orders.map(o => `<div class="order-card"><h3 style="color:var(--text-main);">${o.productName}</h3><p style='color:var(--text-muted);'>ID: ${o.id}</p><p style='color:var(--text-muted);'>Qty: ${o.quantity} | ₹${o.price}</p><p style="margin-top:5px;">Status: <span class="status">${o.status}</span></p>${o.status==="Pending"?`<button class="danger-btn" onclick="cancelOrder('${o.id}')" style="margin-top:8px;padding:8px;">Cancel Order</button>`:""}</div>`).join("");
+}
+
+async function cancelOrder(id){
+    let o = orders.find(ord => ord.id === id);
+    if(o && o.status === "Pending"){
+        o.status = "Cancelled by Customer";
+        let p = products.find(prod => prod.id === o.productId);
+        if(p) p.stock += o.quantity;
+        await saveToGitHub('orders.json', orders);
+        await saveToGitHub('products.json', products);
+        renderCustomerOrders();
+        notify("Order cancelled.");
+    }
+}
+
+// SUPPORT & LANGUAGE
+function changeAppLanguage(lang) {
+    notify("Language changed successfully!");
+}
+
+function openHelpCenter() {
+    alert("Help Center: For any query regarding your orders, delivery or payment, please contact store owner directly.");
+}
+
+function openLiveChat() {
+    alert("Live Chat Support: Connecting you with store representative... (Feature ready)");
+}
+
+// ADMIN
+function openAdminLogin(){ document.getElementById("adminModal").classList.add("show"); }
+function closeAdminModal(){ document.getElementById("adminModal").classList.remove("show"); document.getElementById("adminPassword").value = ""; }
+function checkAdminPassword(){
+    const inputPass = document.getElementById("adminPassword").value;
+    if(btoa(inputPass) === 'MzkzOQ=='){ 
+        closeAdminModal();
+        document.getElementById("adminDashboardModal").classList.add("show");
+        openAdminSection("adminProducts");
+    } else {
+        document.getElementById("adminError").textContent = "Incorrect PIN";
+    }
+}
+function closeAdminDashboard(){ document.getElementById("adminDashboardModal").classList.remove("show"); }
+
+function openAdminSection(sec){
+    ["adminAddProduct", "adminListedProducts", "adminOrdersSection", "analyticsSection"].forEach(s => document.getElementById(s).classList.add("hidden"));
+    document.getElementById(sec === 'addProduct' ? 'adminAddProduct' : sec === 'adminProducts' ? 'adminListedProducts' : sec === 'adminOrders' ? 'adminOrdersSection' : 'analyticsSection').classList.remove("hidden");
+    if(sec === 'adminProducts') renderAdminProducts();
+    if(sec === 'adminOrders') renderAdminOrders();
+    if(sec === 'analytics') renderAnalytics();
+}
+
+async function toggleShopStatus(){
+    shopClosed = !shopClosed;
+    updateShopStatusUI();
+    await saveToGitHub('settings.json', { shopClosed: shopClosed });
+    notify(shopClosed ? "Shop is now CLOSED for orders." : "Shop is now OPEN.");
+}
+
+function updateShopStatusUI(){
+    const btn = document.getElementById("shopStatusToggleBtn");
+    if(btn){
+        btn.textContent = shopClosed ? "Orders are CLOSED" : "Orders are OPEN";
+        btn.className = shopClosed ? "danger-btn" : "success-btn";
+    }
+}
+
+function addProduct(){
+    const name = document.getElementById("adminProductName").value.trim();
+    const price = Number(document.getElementById("adminPrice").value);
+    const files = document.getElementById("adminImages").files;
+    if(!name || !price){ alert("Name and price required."); return; }
+
+    let imagePromises = Array.from(files).slice(0,5).map(file => {
+        return new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onload = e => resolve(e.target.result);
+            reader.readAsDataURL(file);
+        });
+    });
+
+    Promise.all(imagePromises).then(async images => {
+        const newProd = {
+            id: Date.now(),
+            name: name,
+            category: document.getElementById("adminCategory").value,
+            gender: document.getElementById("adminGender").value,
+            price: price,
+            oldPrice: Number(document.getElementById("adminOldPrice").value) || 0,
+            discount: Number(document.getElementById("adminDiscount").value) || 0,
+            stock: Number(document.getElementById("adminStock").value) || 10,
+            sizes: document.getElementById("adminSizes").value ? document.getElementById("adminSizes").value.split(",").map(s=>s.trim()) : [],
+            colors: document.getElementById("adminColors").value ? document.getElementById("adminColors").value.split(",").map(c=>c.trim()) : [],
+            description: document.getElementById("adminDescription").value,
+            images: images
+        };
+
+        products.unshift(newProd);
+        await saveToGitHub('products.json', products);
+        notify("Product listed successfully for all users!");
+        renderHomeProducts();
+        openAdminSection('adminProducts');
+    });
+}
+
+function renderAdminProducts(){
+    document.getElementById("adminProductList").innerHTML = products.map(p => `<div class="admin-order"><b style="color:var(--text-main);">${p.name}</b><p class="price">₹${p.price}</p><p style='color:var(--text-muted);'>Stock: ${p.stock}</p><button class="danger-btn" onclick="deleteProduct(${p.id})" style="margin-top:8px;padding:8px;">Delete</button></div>`).join("");
+}
+
+// UPDATED FUNCTION: Manage the layout and buttons of Admin Orders
+function renderAdminOrders(){
+    const container = document.getElementById("adminOrdersList");
+    if(!orders.length){ container.innerHTML = "<p style='color:var(--text-muted);'>No orders.</p>"; return; }
+    
+    const newOrders = orders.filter(o => o.status === "Pending");
+    const acceptedOrders = orders.filter(o => o.status === "Accepted");
+    const deliveredOrders = orders.filter(o => o.status === "Delivered");
+    const otherOrders = orders.filter(o => ["Rejected", "Cancelled", "Cancelled by Customer", "Cancelled by Admin"].includes(o.status));
+
+    let html = "";
+    
+    // 1. Pending (New) Orders
+    if(newOrders.length > 0){
+        html += `<h4 style="margin-top:10px; color:var(--text-main);">New Orders (Pending)</h4>`;
+        html += newOrders.map(o => createAdminOrderHTML(o, `<button class="success-btn" onclick="updateOrderStatus('${o.id}', 'Accepted')" style="padding:8px;">Accept</button> <button class="danger-btn" onclick="updateOrderStatus('${o.id}', 'Rejected')" style="padding:8px;">Reject</button>`)).join("");
+    }
+    
+    // 2. Accepted Orders (Shows Deliver and Cancel buttons)
+    if(acceptedOrders.length > 0){
+        html += `<h4 style="margin-top:10px; color:var(--gold);">Accepted Orders</h4>`;
+        html += acceptedOrders.map(o => createAdminOrderHTML(o, `<button class="primary-btn" onclick="updateOrderStatus('${o.id}', 'Delivered')" style="padding:8px;background:var(--gold);color:#000;">Deliver</button> <button class="danger-btn" onclick="updateOrderStatus('${o.id}', 'Cancelled by Admin')" style="padding:8px;">Cancel</button>`)).join("");
+    }
+
+    // 3. Delivered Orders (Shows delivery time)
+    if(deliveredOrders.length > 0){
+        html += `<h4 style="margin-top:10px; color:var(--green);">Delivered Orders</h4>`;
+        html += deliveredOrders.map(o => {
+            let dTime = o.deliveredAt ? new Date(o.deliveredAt).toLocaleString() : "";
+            return createAdminOrderHTML(o, `<small style="color:var(--green);font-weight:bold;">Delivered at: ${dTime}</small>`);
+        }).join("");
+    }
+
+    // 4. Cancelled / Rejected Orders
+    if(otherOrders.length > 0){
+        html += `<h4 style="margin-top:10px; color:var(--text-muted);">Cancelled / Rejected</h4>`;
+        html += otherOrders.map(o => createAdminOrderHTML(o, "")).join("");
+    }
+    
+    container.innerHTML = html;
+}
+
+// HELPER FUNCTION: To create admin order card UI
+function createAdminOrderHTML(o, actionBtns){
+    return `<div class="admin-order">
+        <h3 style="color:var(--text-main);">${o.productName}</h3>
+        <p style='color:var(--text-muted);'>ID: ${o.id} | Qty: ${o.quantity}</p>
+        <hr style="border-color:var(--border-color);margin:8px 0;">
+        <p><b>Customer:</b> ${o.customer.name} (${o.customer.phone})</p>
+        <p style='color:var(--text-muted);'><b>Address:</b> ${o.customer.house}, ${o.customer.colony}, ${o.customer.district} - ${o.customer.pincode}</p>
+        <p style="margin-top:5px;">Status: <b>${o.status}</b></p>
+        <div style="margin-top:8px;display:flex;gap:8px;">${actionBtns}</div>
+    </div>`;
+}
+
+async function deleteProduct(id){
+    products = products.filter(p => p.id !== id);
+    await saveToGitHub('products.json', products);
+    renderAdminProducts(); renderHomeProducts();
+    notify("Product deleted.");
+}
+
+// UPDATED FUNCTION: Handles status updates (Deliver, Cancel) and auto-removal timer
+async function updateOrderStatus(id, status){
+    let o = orders.find(ord => ord.id === id);
+    if(o){
+        o.status = status;
+        
+        // Return stock if cancelled or rejected
+        if(status === 'Rejected' || status === 'Cancelled by Admin'){
+            let p = products.find(prod => prod.id === o.productId);
+            if(p) p.stock += o.quantity;
+            await saveToGitHub('products.json', products);
+        }
+        
+        // Save timestamp if delivered
+        if(status === 'Delivered'){
+            o.deliveredAt = Date.now();
+            
+            // Automatically remove from UI after 24 hours if admin dashboard stays open
+            setTimeout(async () => {
+                await cleanupDeliveredOrders();
+                if(document.getElementById('adminOrdersSection').classList.contains('hidden') === false) {
+                    renderAdminOrders();
+                }
+            }, 24 * 60 * 60 * 1000); 
+        }
+        
+        await saveToGitHub('orders.json', orders);
+        renderAdminOrders();
+        notify(`Order status updated to ${status}.`);
+    }
+}
+
+function renderAnalytics(){
+    document.getElementById("analyticsProducts").textContent = products.length;
+    document.getElementById("analyticsOrders").textContent = orders.length;
+    document.getElementById("analyticsAccepted").textContent = orders.filter(o => o.status.includes("Accepted") || o.status.includes("Delivered")).length;
+}
+</script>
+
+<!-- BUY BAR -->
+<div id="buyBar" class="buy-bar hidden">
+    <button class="add-cart" onclick="addToCart()">Add to Cart</button>
+    <button class="buy-now" onclick="openBuyModal()">Buy Now</button>
+</div>
+<script>
+const originalShowPage = showPage;
+showPage = function(id){
+    originalShowPage(id);
+    const buyBar = document.getElementById("buyBar");
+    if(id === "productPage") buyBar.classList.remove("hidden");
+    else buyBar.classList.add("hidden");
+};
+</script>
+</body>
+</html>
